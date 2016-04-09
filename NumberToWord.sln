@@ -25,6 +25,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 		PublishScripts\Templates\NumberToWord.param.dev.json = PublishScripts\Templates\NumberToWord.param.dev.json
 	EndProjectSection
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NumberToWord.Core", "src\NumberToWord.Core\NumberToWord.Core.xproj", "{A4400725-91AA-49E8-837D-EC570C9A904F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EDE48D66-9BE7-475D-B8D1-EFCBD3A77594}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NumberToWord.Test", "tests\NumberToWord.Test\NumberToWord.Test.xproj", "{455B2E41-659F-47D7-A934-60EC148DF1FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,14 @@ Global
 		{76B1F4AB-4909-4735-A0C4-B659F875EAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B1F4AB-4909-4735-A0C4-B659F875EAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B1F4AB-4909-4735-A0C4-B659F875EAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4400725-91AA-49E8-837D-EC570C9A904F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4400725-91AA-49E8-837D-EC570C9A904F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4400725-91AA-49E8-837D-EC570C9A904F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4400725-91AA-49E8-837D-EC570C9A904F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{455B2E41-659F-47D7-A934-60EC148DF1FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455B2E41-659F-47D7-A934-60EC148DF1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455B2E41-659F-47D7-A934-60EC148DF1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455B2E41-659F-47D7-A934-60EC148DF1FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,5 +57,7 @@ Global
 		{76B1F4AB-4909-4735-A0C4-B659F875EAA6} = {F103AF31-BE11-4C62-87D6-3F08573F651F}
 		{BA825BDF-9953-4A4E-AC2C-4A414BF6DF3D} = {8A2A14DF-D0DB-43EF-ADD4-37013A443342}
 		{BFF8D1AD-D74F-4084-B926-9717A48C596B} = {8A2A14DF-D0DB-43EF-ADD4-37013A443342}
+		{A4400725-91AA-49E8-837D-EC570C9A904F} = {F103AF31-BE11-4C62-87D6-3F08573F651F}
+		{455B2E41-659F-47D7-A934-60EC148DF1FE} = {EDE48D66-9BE7-475D-B8D1-EFCBD3A77594}
 	EndGlobalSection
 EndGlobal
