@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NumberToWord.Core;
 
 namespace NumberToWord
 {
@@ -27,10 +28,14 @@ namespace NumberToWord
             services.AddMvc(config =>
             {
 				config.RespectBrowserAcceptHeader = true;
+				config.InputFormatters.Add(new JsonInputFormatter());
 				config.InputFormatters.Add(new XmlSerializerInputFormatter());
 				config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+				config.OutputFormatters.Add(new JsonOutputFormatter());
 			});
-	    
+
+	        services.AddTransient<NumberTextConverter, NumberTextConverter>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,10 +6,9 @@ using Newtonsoft.Json;
 
 namespace NumberToWord.models
 {
-    public class WordResult : BaseResult
+    public class BaseResult
     {
-		[JsonProperty("result")]
-		public string Result { get; set; }
-
-    }
+		[JsonProperty("message")]
+		public string Message { get; set; }
+	}
 }

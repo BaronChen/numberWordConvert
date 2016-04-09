@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NumberToWord.Core
 {
@@ -165,14 +166,14 @@ namespace NumberToWord.Core
 			return false;
 		}
 
-		public string IntegerToWritten(long n, bool isUS)
+		public string IntegerToWritten(long n, bool isUS = false)
 		{
 			if (n == 0)
 			{
 				return zero;
 			}else if (n < 0)
 			{
-				throw new ApplicationException("Number need to be positive.");
+				throw new Exception("Number need to be positive.");
 			}
 	
 			return getWritten(n, isUS);
@@ -235,6 +236,7 @@ namespace NumberToWord.Core
 			return number;
 		}
 
-	
+
+
 	}
 }

@@ -116,7 +116,7 @@ namespace NumberToWord.Test
 		public void InvalidNegativeNumber()
 		{
 
-			Exception ex = Assert.Throws<ApplicationException>(() => Converter.IntegerToWritten(-189, false));
+			Exception ex = Assert.Throws<Exception>(() => Converter.IntegerToWritten(-189, false));
 
 			Assert.Equal("Number need to be positive.", ex.Message);
 

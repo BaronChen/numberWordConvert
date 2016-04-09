@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using NumberToWord.Core;
 using NumberToWord.models;
 
 namespace NumberToWord.Controllers
@@ -10,6 +12,14 @@ namespace NumberToWord.Controllers
     [Route("api/intword")]
     public class IntWordController : Controller
     {
+
+	    private readonly NumberTextConverter NumberTextConverter;
+
+	    public IntWordController(NumberTextConverter numberTextConverter)
+	    {
+		    this.NumberTextConverter = numberTextConverter;
+	    }
+
 	    [Route("index")]
 	    [HttpGet]
 	    public string Index()
@@ -17,26 +27,52 @@ namespace NumberToWord.Controllers
 		    return "Welcome!";
 	    }
 
-	    [Route("int-to-word")]   
+	    [Route("number-to-word")]   
         [HttpPost]
-        public WordResult  IntToWord()
+        public WordResult IntToWord([FromBody]IntInput numberInput)
         {
 			var wordResult = new WordResult();
 
-			wordResult.Result = "lalal";
+		    if (numberInput.Number < 0)
+		    {
+				wordResult.Message = "Number need to be less than 0";
+				Response.StatusCode = 400;
+				return wordResult;
+			}
 
-            return wordResult;
+		    try
+		    {
+			    wordResult.Result = NumberTextConverter.IntegerToWritten(numberInput.Number);
+		    }
+		    catch
+		    {
+			    wordResult.Message = "Internal Server Error";
+			    Response.StatusCode = 500;
+				return wordResult;
+		    }
+
+			return wordResult;
         }
 
-		[Route("word-to-int")]
+		[Route("word-to-number")]
 		[HttpPost]
-		public IntResult WordToInt()
+		public IntResult WordToInt([FromBody]WordInput wordInput)
 		{
 			var intResult = new IntResult();
 
-			intResult.Result = 12436;
+			try
+			{
+				intResult.Result = NumberTextConverter.WrittenToInteger(wordInput.Word);
+			}
+			catch
+			{
+				intResult.Message = "Internal Server Error";
+				Response.StatusCode = 500;
+				return intResult;
+			}
 
 			return intResult;
 		}
+
 	}
 }

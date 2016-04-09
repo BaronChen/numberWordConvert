@@ -8,7 +8,7 @@ namespace NumberToWord.models
 {
     public class IntInput
     {
-		[JsonProperty("int")]
-		public long Int { get; set; }
+		[JsonProperty("number")]
+		public long Number { get; set; }
     }
 }
