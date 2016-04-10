@@ -21,6 +21,7 @@ md-toolbar h3 {
 	line-height: 36px;
 	margin: auto;
 	margin-left: 1%;
+	color: white;
 }
 
 md-list-item > button {
@@ -28,8 +29,16 @@ md-list-item > button {
 	text-align: left !important;
 }
 
-#content {
+
+md-toolbar.md-warn .md-toolbar-tools button span {
+	color: white;
+}
+
+.btn-group {
+	margin-bottom: 20px;
+}
+/*#content {
 	padding-left: 40px;
 	padding-right: 40px;
 	padding-top: 5px;
-}
+}*/

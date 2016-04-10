@@ -16,7 +16,7 @@ gulp.task('default', function () {
 
 gulp.task('clean-wwwroot', function(done) {
 	gutil.log('Cleaning JavaScript...');
-	del(['./wwwroot/**/*.js', './wwwroot/**/*.js.map', './wwwroot/index.html','./wwwroot/app/**']).then(function() {
+	del(['./wwwroot/**/*.js', './wwwroot/**/*.js.map', './wwwroot/index.html','./wwwroot/app/**', '!./wwwroot/lib/**/*']).then(function() {
 		done();
 	});
 });

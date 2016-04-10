@@ -1,3 +1,35 @@
-﻿<div>
-	<h1>{{greeting}}</h1>
-</div>
+﻿
+
+<md-content layout-padding="">
+	<md-toolbar class="md-warn" ng-show="showError">
+		<div class="md-toolbar-tools">
+			<h2 class="md-flex">{{errorMessage}}</h2>
+			<span flex=""></span>
+			<md-button aria-label="Close" ng-click="vm.hideErrorMessage()">
+				Close
+			</md-button>
+		</div>
+	</md-toolbar>
+	<div layout-gt-sm="row">
+		<md-input-container class="md-block" flex-gt-sm="">
+			<label>Number</label>
+			<input ng-model="number">
+		</md-input-container>
+	</div>
+	<div layout-gt-sm="row" class="btn-group">
+		<md-button ng-click="vm.convertNumberToWords()" class="md-fab md-primary">
+			<ng-md-icon icon="arrow_downward" style="fill: white" size="32"></ng-md-icon>
+		</md-button>
+		<md-button ng-click="vm.covertWordToNumber()" class="md-fab">
+			<ng-md-icon icon="arrow_upwards" style="fill: white" size="32"></ng-md-icon>
+		</md-button>
+	</div>
+	<div layout-gt-sm="row">
+		<md-input-container class="md-block" flex-gt-sm="">
+			<label>Words</label>
+			<input ng-model="words">
+		</md-input-container>
+	</div>
+
+</md-content>
+

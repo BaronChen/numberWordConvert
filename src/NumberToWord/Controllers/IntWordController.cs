@@ -33,9 +33,16 @@ namespace NumberToWord.Controllers
         {
 			var wordResult = new WordResult();
 
+		    if (numberInput == null)
+		    {
+				wordResult.Message = "Please provide a valid number that larger than 0.";
+				Response.StatusCode = 400;
+				return wordResult;
+			}
+
 		    if (numberInput.Number < 0)
 		    {
-				wordResult.Message = "Number need to be less than 0";
+				wordResult.Message = "Number need to be larger than 0";
 				Response.StatusCode = 400;
 				return wordResult;
 			}

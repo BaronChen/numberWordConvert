@@ -12,23 +12,30 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.7/angular-material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-messages.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script> 
+
 
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.7/angular-material.min.css" />
 
 	<!-- build:css style.css -->
 	<link rel="stylesheet" href="app/style/style.css" />
+	<link rel="stylesheet" href="app/style/icons.css" />
 	<!-- endbuild -->
 
 	<!-- build:js app.js -->
 	<script src="app/app.js"></script>
-	<script src="app/controllers/converterController.js"></script>
+	<script src="app/services/converterService.js"></script>
 	<script src="app/directives/header/header.directive.js"></script>
 	<script src="app/directives/sidenav/sidenav.directive.js"></script>
+	<script src="app/controllers/converterController.js"></script>
+
 	<!-- endbuild-->
 </head>
 <body ng-cloak layout="column">
-
+	
 	<md-toolbar layout="row">
 		<header-directive layout="row"></header-directive>
 	</md-toolbar>
@@ -42,7 +49,7 @@
 
 
 		<!-- Container #4 -->
-		<md-content flex id="content">
+		<md-content flex id="content" >
 			<ng-view></ng-view>
 		</md-content>
 
