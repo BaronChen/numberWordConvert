@@ -1,4 +1,7 @@
 /artifacts
 /.vs
-PublishScripts
-packages
+/src/NumberToWord/node_modules
+/packages
+/src/NumberToWord/wwwroot/app
+/src/NumberToWord/wwwroot/lib
+/src/NumberToWord/wwwroot/index.html

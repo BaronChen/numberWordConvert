@@ -11,7 +11,7 @@ namespace NumberToWord.Core
 		static string[] ones = new string[] { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 		static string[] teens = new string[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
 		static string[] tens = new string[] { "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-		static string[] thousandsGroups = { "", "thousand", "million", "billion" };
+		static string[] thousandsGroups = { "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion" };
 		private static string hundred = "hundred";
 		private static string zero = "zero";
 
@@ -52,6 +52,9 @@ namespace NumberToWord.Core
 			numberDic.Add("thousand", 1000);
 			numberDic.Add("million", 1000000);
 			numberDic.Add("billion", 1000000000);
+			numberDic.Add("trillion", 1000000000000);
+			numberDic.Add("quadrillion", 1000000000000000);
+			numberDic.Add("quintillion", 1000000000000000000);
 		}
 
 		private string FriendlyInteger(long n, string leftDigits, int thousands, bool isUS)
@@ -88,7 +91,9 @@ namespace NumberToWord.Core
 			}
 			else if (n < 1000)
 			{
-				friendlyInt += FriendlyInteger(n % 100, (ones[n / 100] + " " + hundred), 0, isUS);
+				string[] a = leftDigits.Split(' ');
+				var shouldNotAddAnd = isUS || string.IsNullOrWhiteSpace(friendlyInt) || Array.IndexOf(thousandsGroups, a[a.Count() - 1]) >= 2;
+                friendlyInt += (shouldNotAddAnd ? "":"and ") + FriendlyInteger(n % 100, (ones[n / 100] + " " + hundred), 0, isUS);
 			}
 			else
 			{
@@ -101,7 +106,7 @@ namespace NumberToWord.Core
 			}
 
 			string[] s = friendlyInt.Split(' ');
-			if (s[s.Count() - 1].Equals(thousandsGroups[2]) || s[s.Count() - 1].Equals(thousandsGroups[3]))
+			if (Array.IndexOf(thousandsGroups, s[s.Count() - 1]) >= 2)
 			{
 				return friendlyInt;
 			}
@@ -142,30 +147,6 @@ namespace NumberToWord.Core
 			return result.ToLower().Trim();
 		}
 
-		private bool ShouldMultifyWithPreviousNumber(int i, List<string> words, string word)
-		{
-			var currentWordIndex = Array.IndexOf(thousandsGroups, word);
-
-			for (int j = i - 1; j > 0; j--)
-			{
-				if (thousandsGroups.Contains(words[j]))
-				{
-					var previousWordIndex = Array.IndexOf(thousandsGroups, words[j]);
-
-					if (previousWordIndex < currentWordIndex)
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			}
-
-			return false;
-		}
-
 		public string IntegerToWritten(long n, bool isUS = false)
 		{
 			if (n == 0)
@@ -199,24 +180,12 @@ namespace NumberToWord.Core
 
 				}
 
-				if (word.Equals(thousandsGroups[1]) || word.Equals(thousandsGroups[2]) || word.Equals(thousandsGroups[3]))
+				if (Array.IndexOf(thousandsGroups, word) >= 1)
 				{
-					var should = ShouldMultifyWithPreviousNumber(i, words, word);
-					if (should)
-					{
-						tempNumber += number;
-						tempNumber *= numberDic[word];
-						number = tempNumber;		
-					}
-					else
-					{
-						tempNumber *= numberDic[word];
-						number += tempNumber;
-					}
-
+					tempNumber *= numberDic[word];
+					number += tempNumber;
 					tempNumber = 0;
 					continue;
-
 				}
 
 				if (word.Equals(hundred))

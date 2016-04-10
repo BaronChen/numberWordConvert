@@ -34,20 +34,22 @@ namespace NumberToWord.Test
 				"three hundred",
 				"five hundred and fifteen",
 				"one thousand",
-				"one thousand one hundred",
-				"one thousand two hundred and thirty four",
-				"nine thousand nine hundred and ninety nine",
-				"one hundred thousand one hundred",
-				"two hundred and ten thousand one hundred and nineteen",
+				"one thousand and one hundred",
+				"one thousand and two hundred and thirty four",
+				"nine thousand and nine hundred and ninety nine",
+				"one hundred thousand and one hundred",
+				"two hundred and ten thousand and one hundred and nineteen",
 				"one million",
-				"four million nine hundred and ninety nine thousand three hundred and twenty three",
+				"four million nine hundred and ninety nine thousand and three hundred and twenty three",
 				"six hundred and seventy eight million one hundred and ten thousand and seventy",
 				"one billion",
-				"one billion one million one thousand one hundred",
+				"one billion one million one thousand and one hundred",
 				"twenty billion six hundred and seventy eight million one hundred and ten thousand and seventy",
 				"one hundred and ninety nine billion six hundred and seventy eight million one hundred and ten thousand and seventy",
-				"two hundred and thirty four thousand one hundred and ninety nine billion six hundred and seventy eight million one hundred and ten thousand and seventy",
-				"nine hundred and ninety nine million two hundred and thirty four thousand one hundred and ninety nine billion six hundred and seventy eight million one hundred and ten thousand and seventy"
+				"two trillion thirty four billion",
+                "two hundred and thirty four trillion one hundred and ninety nine billion six hundred and seventy eight million one hundred and ten thousand and seventy",
+				"nine hundred and ninety nine quadrillion two hundred and thirty four trillion one hundred and ninety nine billion six hundred and seventy eight million one hundred and ten thousand and seventy",
+				"nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand and eight hundred and seven"
 			};
 
 			Numbers = new List<long>()
@@ -77,8 +79,10 @@ namespace NumberToWord.Test
 				1001001100,
 				20678110070,
 				199678110070,
-				234199678110070,
-				999234199678110070
+				2034000000000,
+                234199678110070,
+				999234199678110070,
+				9223372036854775807
 
 			};
 		}

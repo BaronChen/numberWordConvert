@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8" />
+	<title>Number Word Converter</title>
+
+	<base href="/" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.7/angular-material.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.7/angular-material.min.css" />
+
+	<!-- build:css style.css -->
+	<link rel="stylesheet" href="app/style/style.css" />
+	<!-- endbuild -->
+
+	<!-- build:js app.js -->
+	<script src="app/app.js"></script>
+	<script src="app/controllers/converterController.js"></script>
+	<script src="app/directives/header/header.directive.js"></script>
+	<script src="app/directives/sidenav/sidenav.directive.js"></script>
+	<!-- endbuild-->
+</head>
+<body ng-cloak layout="column">
+
+	<md-toolbar layout="row">
+		<header-directive layout="row"></header-directive>
+	</md-toolbar>
+
+	<div flex layout="row">
+
+		<!-- Container #3 -->
+		<md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-4dp" >
+			<sidenav-directive></sidenav-directive>
+		</md-sidenav>
+
+
+		<!-- Container #4 -->
+		<md-content flex id="content">
+			<ng-view></ng-view>
+		</md-content>
+
+	</div>
+</body>
+</html>

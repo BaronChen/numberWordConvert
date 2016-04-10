@@ -1,0 +1,35 @@
+﻿html, body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+header-directive {
+	height: 100%;
+	width: 100%;
+}
+
+md-toolbar {
+ height:36px;
+}
+
+md-toolbar h3 {
+	height: 36px;
+	line-height: 36px;
+	margin: auto;
+	margin-left: 1%;
+}
+
+md-list-item > button {
+	width: 100%;
+	text-align: left !important;
+}
+
+#content {
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-top: 5px;
+}
