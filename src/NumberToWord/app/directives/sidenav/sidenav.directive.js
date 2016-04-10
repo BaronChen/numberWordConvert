@@ -22,12 +22,15 @@
 				},
 				{
 					title: 'Fork Me!',
-					route: '/fork-me'
+					externalLink: 'https://github.com/BaronChen/numberWordConvert'
 				}
 			];
 
-			$scope.go = function (path) {
-				$location.path(path);
+			$scope.go = function (menuItem) {
+				if (menuItem.externalLink) {
+					window.location.href = menuItem.externalLink;
+				}
+				$location.path(menuItem.route);
 			};
 
 			$scope.toggleMenu = function() {

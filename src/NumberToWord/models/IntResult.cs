@@ -9,7 +9,7 @@ namespace NumberToWord.models
     public class IntResult:BaseResult
     {
 		[JsonProperty("result")]
-		public long Result { get; set; }
+		public string Result { get; set; }
 
 	}
 }

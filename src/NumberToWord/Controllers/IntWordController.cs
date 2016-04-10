@@ -69,7 +69,7 @@ namespace NumberToWord.Controllers
 
 			try
 			{
-				intResult.Result = NumberTextConverter.WrittenToInteger(wordInput.Word);
+				intResult.Result = "" + NumberTextConverter.WrittenToInteger(wordInput.Word);
 			}
 			catch
 			{
