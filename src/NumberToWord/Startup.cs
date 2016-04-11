@@ -34,7 +34,7 @@ namespace NumberToWord
 				config.OutputFormatters.Add(new JsonOutputFormatter());
 			});
 
-	        services.AddTransient<NumberTextConverter, NumberTextConverter>();
+	        services.AddTransient<INumberTextConverter, NumberTextConverter>();
 
         }
 

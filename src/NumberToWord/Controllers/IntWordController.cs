@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using NumberToWord.Core;
 using NumberToWord.models;
+using NumberToWord.Test;
 
 namespace NumberToWord.Controllers
 {
@@ -13,9 +14,9 @@ namespace NumberToWord.Controllers
     public class IntWordController : Controller
     {
 
-	    private readonly NumberTextConverter NumberTextConverter;
+	    private readonly INumberTextConverter NumberTextConverter;
 
-	    public IntWordController(NumberTextConverter numberTextConverter)
+	    public IntWordController(INumberTextConverter numberTextConverter)
 	    {
 		    this.NumberTextConverter = numberTextConverter;
 	    }
@@ -33,16 +34,9 @@ namespace NumberToWord.Controllers
         {
 			var wordResult = new WordResult();
 
-		    if (numberInput == null)
+		    if (string.IsNullOrWhiteSpace(numberInput.Number))
 		    {
 				wordResult.Message = "Please provide a valid number that larger than 0.";
-				Response.StatusCode = 400;
-				return wordResult;
-			}
-
-		    if (numberInput.Number < 0)
-		    {
-				wordResult.Message = "Number need to be larger than 0";
 				Response.StatusCode = 400;
 				return wordResult;
 			}
@@ -51,6 +45,12 @@ namespace NumberToWord.Controllers
 		    {
 			    wordResult.Result = NumberTextConverter.IntegerToWritten(numberInput.Number);
 		    }
+		    catch (NumberTextConverterException e)
+		    {
+				wordResult.Message = e.Message;
+				Response.StatusCode = 400;
+				return wordResult;
+			}
 		    catch
 		    {
 			    wordResult.Message = "Internal Server Error";
@@ -70,6 +70,12 @@ namespace NumberToWord.Controllers
 			try
 			{
 				intResult.Result = "" + NumberTextConverter.WrittenToInteger(wordInput.Word);
+			}
+			catch (NumberTextConverterException e)
+			{
+				intResult.Message = e.Message;
+				Response.StatusCode = 400;
+				return intResult;
 			}
 			catch
 			{

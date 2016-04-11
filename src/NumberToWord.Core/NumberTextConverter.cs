@@ -2,25 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NumberToWord.Test;
 
 namespace NumberToWord.Core
 {
-	public class NumberTextConverter
-	{
-
-		static string[] ones = new string[] { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-		static string[] teens = new string[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-		static string[] tens = new string[] { "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-		static string[] thousandsGroups = { "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion" };
+    public class NumberTextConverter : INumberTextConverter
+    {
+		static string[] Ones = new string[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+		static string[] Teens = new string[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+		static string[] Tens = new string[] { "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+		static string[] ThousandsGroups = { "tens", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion" };
 		private static string hundred = "hundred";
-		private static string zero = "zero";
 
-		private Dictionary<string, long> numberDic;
-
+		private Dictionary<string, int> numberDic;
 
 		public NumberTextConverter()
 		{
-			numberDic = new Dictionary<string, long>();
+			numberDic = new Dictionary<string, int>();
 			numberDic.Add("one", 1);
 			numberDic.Add("two", 2);
 			numberDic.Add("three", 3);
@@ -49,141 +47,174 @@ namespace NumberToWord.Core
 			numberDic.Add("eighty", 80);
 			numberDic.Add("ninety", 90);
 			numberDic.Add("hundred", 100);
-			numberDic.Add("thousand", 1000);
-			numberDic.Add("million", 1000000);
-			numberDic.Add("billion", 1000000000);
-			numberDic.Add("trillion", 1000000000000);
-			numberDic.Add("quadrillion", 1000000000000000);
-			numberDic.Add("quintillion", 1000000000000000000);
 		}
 
-		private string FriendlyInteger(long n, string leftDigits, int thousands, bool isUS)
+
+		public string IntegerToWritten(string n, bool isUs = false)
+	    {
+			if (!IsDigitsOnly(n))
+			{
+				throw new NumberTextConverterException("Invalid number");
+			}
+
+		    if (n.Length > 36)
+		    {
+			    throw  new NumberTextConverterException("Number too big");
+		    }
+
+			if (n == "0")
+			{
+				return Ones[0];
+			}
+
+			var coreData = new Dictionary<string, int>();
+
+		    var temp = n.Reverse().ToList();
+		    var thousandGroupIndex = 0;
+		    while (temp.Any())
+		    {
+			    var p = string.Concat(temp.Take(3).Reverse());
+				coreData.Add(ThousandsGroups[thousandGroupIndex], Convert.ToInt32(p));
+				temp = temp.Skip(3).ToList();
+				thousandGroupIndex++;
+
+		    }
+
+			var transferedData = TransferData(isUs, coreData);
+
+			var result = ConstructNumberText(isUs, transferedData);
+
+			return result;
+	    }
+
+	    private string ConstructNumberText(bool isUs, Dictionary<string, string> transferedData)
+	    {
+		    var result = "";
+		    foreach (var magName in ThousandsGroups.Reverse().ToList())
+		    {
+			    if (!transferedData.ContainsKey(magName))
+				    continue;
+
+			    if (string.IsNullOrWhiteSpace(transferedData[magName]))
+				    continue;
+
+			    if (magName == ThousandsGroups[0])
+			    {
+				    if (!isUs)
+				    {
+					    result = result.TrimEnd().Trim(',');
+				    }
+
+				    result += (!isUs && !string.IsNullOrWhiteSpace(result) ? " and" : "") +
+				              (!string.IsNullOrWhiteSpace(result) ? " " : "") + transferedData[magName];
+			    }
+			    else
+			    {
+				    result += transferedData[magName] + " " + magName + ", ";
+			    }
+		    }
+
+		    result = result.Trim().TrimEnd(',');
+		    return result;
+	    }
+
+	    private Dictionary<string, string> TransferData(bool isUs, Dictionary<string, int> coreData)
+	    {
+		    var transferedData = new Dictionary<string, string>();
+
+		    foreach (var key in coreData.Keys)
+		    {
+			    var value = coreData[key];
+
+			    var str = ParseNumber(value, "", isUs);
+
+			    transferedData.Add(key, str);
+		    }
+		    return transferedData;
+	    }
+
+		private bool IsDigitsOnly(string str)
+		{
+			return str.All(c => c >= '0' && c <= '9');
+		}
+
+		private string ParseNumber(int n, string leftStr, bool isUs = false)
 		{
 			if (n == 0)
 			{
-				return leftDigits;
+				return leftStr;
 			}
-			string friendlyInt = leftDigits;
-			if (friendlyInt.Length > 0)
+
+			var friendlyInt = leftStr;
+
+			if (friendlyInt.Any())
 			{
 				friendlyInt += " ";
 			}
 
 			if (n < 100 && n > 0)
 			{
-				string[] array = leftDigits.Split(' ');
-				if ((array[array.Count() - 1].Equals(hundred)) && !isUS)
+				string[] array = leftStr.Split(' ');
+				if ((array[array.Count() - 1].Equals(hundred)) && !isUs)
 				{
 					friendlyInt += "and ";
 				}
 			}
+
 			if (n < 10)
 			{
-				friendlyInt += ones[n];
+				friendlyInt += Ones[n];
 			}
 			else if (n < 20)
 			{
-				friendlyInt += teens[n - 10];
+				friendlyInt += Teens[n - 10];
 			}
 			else if (n < 100)
 			{
-				friendlyInt += FriendlyInteger(n % 10, tens[n / 10 - 2], 0, isUS);
-			}
-			else if (n < 1000)
-			{
-				string[] a = leftDigits.Split(' ');
-				var shouldNotAddAnd = isUS || string.IsNullOrWhiteSpace(friendlyInt) || Array.IndexOf(thousandsGroups, a[a.Count() - 1]) >= 2;
-                friendlyInt += (shouldNotAddAnd ? "":"and ") + FriendlyInteger(n % 100, (ones[n / 100] + " " + hundred), 0, isUS);
+				friendlyInt += ParseNumber(n % 10, Tens[n / 10 - 2], isUs);
 			}
 			else
 			{
-				var nextThousands = thousands + 1;
-				if (nextThousands >= thousandsGroups.Length)
-				{
-					nextThousands = 1;
-				}
-                friendlyInt += FriendlyInteger(n % 1000, FriendlyInteger(n / 1000, "", nextThousands, isUS), 0, isUS);
+				string[] a = leftStr.Split(' ');
+
+				friendlyInt += ParseNumber(n % 100, (Ones[n / 100] + " " + hundred), isUs);
 			}
 
-			string[] s = friendlyInt.Split(' ');
-			if (Array.IndexOf(thousandsGroups, s[s.Count() - 1]) >= 2)
-			{
-				return friendlyInt;
-			}
-
-
-			return friendlyInt + (string.IsNullOrWhiteSpace(thousandsGroups[thousands])? "" : " ") + thousandsGroups[thousands];
+			return friendlyInt;
 		}
 
-		private string getWritten(long n, bool isUS)
-		{
-			var tens = n % 100;
-			var others = (n / 100) * 100;
-
-			var tensStr = FriendlyInteger(tens, "", 0, isUS);
-			var othersStr = FriendlyInteger(others, "", 0, isUS);
-
-			var result = "";
-			if (!string.IsNullOrWhiteSpace(tensStr) && !string.IsNullOrWhiteSpace(othersStr))
-			{
-				if (isUS)
-				{
-					result = othersStr + " " + tensStr;
-				}
-				else
-				{
-				  result = othersStr + " and " + tensStr;
-
-				}
-			}
-			else if (!string.IsNullOrWhiteSpace(othersStr))
-			{
-				result = othersStr;
-			}else if (!string.IsNullOrWhiteSpace(tensStr))
-			{
-				result = tensStr;
-			}
-
-			return result.ToLower().Trim();
-		}
-
-		public string IntegerToWritten(long n, bool isUS = false)
-		{
-			if (n == 0)
-			{
-				return zero;
-			}else if (n < 0)
-			{
-				throw new Exception("Number need to be positive.");
-			}
-	
-			return getWritten(n, isUS);
-		}
-
-		public long WrittenToInteger(string numberText)
-		{
+		public string WrittenToInteger(string numberText)
+	    {
 			numberText = numberText.Trim();
 			numberText = numberText.ToLower();
 			List<string> words = numberText.Split(' ').ToList();
-			long number = 0;
-			long tempNumber = 0;
-			for (var i = 0;  i < words.Count; i++)
+			
+			int tempNumber = 0;
+
+		    words = words.Select(w =>
+		    {
+			    w = w.Trim().Trim(',');
+			    return w;
+		    }).ToList();
+
+			var transferedData = new Dictionary<string, int>();
+
+			for (var i = 0; i < words.Count; i++)
 			{
 				var word = words[i];
 				if (string.IsNullOrEmpty(word) || string.IsNullOrWhiteSpace(word))
 				{
 					continue;
 				}
-				if (!numberDic.ContainsKey(word))
+				if (!numberDic.ContainsKey(word) && !(Array.IndexOf(ThousandsGroups, word) >= 1))
 				{
 					continue;
 
 				}
 
-				if (Array.IndexOf(thousandsGroups, word) >= 1)
+				if (Array.IndexOf(ThousandsGroups, word) >= 1)
 				{
-					tempNumber *= numberDic[word];
-					number += tempNumber;
+					transferedData.Add(word, tempNumber);
 					tempNumber = 0;
 					continue;
 				}
@@ -195,16 +226,58 @@ namespace NumberToWord.Core
 				}
 
 				tempNumber += numberDic[word];
-
-
 			}
-			if (tempNumber != 0)
+
+		    if (tempNumber > 0)
+		    {
+			    transferedData.Add(ThousandsGroups[0], tempNumber);
+		    }
+
+			//this will take care of zero
+			if (!transferedData.Keys.Any())
 			{
-				number += tempNumber;
+				return "0";
 			}
-			return number;
+
+			var highestIndex = GetHighestIndex(transferedData);
+
+			for (int i = 0; i <= highestIndex; i++)
+			{
+				var magName = ThousandsGroups[i];
+				if (!transferedData.ContainsKey(magName))
+					transferedData.Add(magName, 0);
+			}
+
+			var result = ConstructInt(transferedData);
+
+			return result;
 		}
 
+	    private string ConstructInt(Dictionary<string, int> transferedData)
+	    {
+		    var result = "";
+		    foreach (var magName in ThousandsGroups.Reverse().ToList())
+		    {
+			    if (!transferedData.ContainsKey(magName))
+				    continue;
+
+			    result += transferedData[magName].ToString("D3");
+		    }
+
+		    result = result.Trim().TrimStart('0');
+		    return result;
+	    }
+
+	    private int GetHighestIndex(Dictionary<string, int> transferedData)
+	    {
+			foreach (var magName in ThousandsGroups.Reverse().ToList())
+			{
+				if (transferedData.ContainsKey(magName))
+					return Array.IndexOf(ThousandsGroups, magName);
+			}
+
+		    throw new NumberTextConverterException("Unknow error.");
+	    }
 
 
 	}

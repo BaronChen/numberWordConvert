@@ -9,6 +9,6 @@ namespace NumberToWord.models
     public class IntInput
     {
 		[JsonProperty("number")]
-		public long Number { get; set; }
+		public string Number { get; set; }
     }
 }
