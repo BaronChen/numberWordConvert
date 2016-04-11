@@ -51,7 +51,9 @@ namespace NumberToWord.Core
 
 
 		public string IntegerToWritten(string n, bool isUs = false)
-	    {
+		{
+			n = n.Replace(",", string.Empty);
+
 			if (!IsDigitsOnly(n))
 			{
 				throw new NumberTextConverterException("Invalid number");
@@ -187,7 +189,7 @@ namespace NumberToWord.Core
 	    {
 			numberText = numberText.Trim();
 			numberText = numberText.ToLower();
-			List<string> words = numberText.Split(' ').ToList();
+			List<string> words = numberText.Split(new[] { ',', ' ' }).ToList();
 			
 			int tempNumber = 0;
 
@@ -196,6 +198,9 @@ namespace NumberToWord.Core
 			    w = w.Trim().Trim(',');
 			    return w;
 		    }).ToList();
+
+			words.RemoveAll(string.IsNullOrWhiteSpace);
+
 
 			var transferedData = new Dictionary<string, int>();
 
