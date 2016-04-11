@@ -37,6 +37,12 @@ md-toolbar.md-warn .md-toolbar-tools button span {
 .btn-group {
 	margin-bottom: 20px;
 }
+
+.activeMenu {
+	background-color: #9e9e9e;
+	background-color: rgba(158,158,158,0.2);
+}
+
 /*#content {
 	padding-left: 40px;
 	padding-right: 40px;

@@ -8,17 +8,20 @@ app.config(['$routeProvider', '$locationProvider', '$mdIconProvider', '$mdThemin
       when('/converter', {
       	templateUrl: 'app/views/converter.html',
       	controller: 'converterController',
-      	controllerAs: 'vm'
+      	controllerAs: 'vm',
+		name: 'converter'
       }).
 	 when('/api-doc', {
 		templateUrl: 'app/views/api-doc.html',
 		controller: 'apiDocController',
-		controllerAs: 'vm'
+		controllerAs: 'vm',
+		name: 'apiDoc'
 	 }).
 	 when('/about', {
 	 	templateUrl: 'app/views/about.html',
 	 	controller: 'aboutController',
-	 	controllerAs: 'vm'
+	 	controllerAs: 'vm',
+		name: 'about'
 	 }).
      otherwise({
      	redirectTo: '/converter'

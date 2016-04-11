@@ -1,4 +1,4 @@
-﻿app.directive('sidenavDirective', ['$location', '$mdSidenav', function ($location, $mdSidenav) {
+﻿app.directive('sidenavDirective', ['$location', '$mdSidenav', '$route', function ($location, $mdSidenav, $route) {
 
 	return {
 		restrict: 'E',
@@ -6,23 +6,32 @@
 		},
 		templateUrl: 'app/directives/sidenav/sidenavDirective.html',
 		link: function ($scope, element, attrs) {
-
+			$scope.$route = $route; 
 			$scope.menuItems = [
 				{
 					title: 'Converter',
-					route: '/converter'
+					route: '/converter',
+					icon: 'loop',
+					routeName: 'converter'
 				},
 				{
 					title: 'API',
-					route: '/api-doc'
+					route: '/api-doc',
+					icon: 'wifi_tethering',
+					routeName: 'apiDoc'
 				},
 				{
 					title: 'About',
-					route: '/about'
+					route: '/about',
+					icon: 'person',
+					routeName: 'about'
+
 				},
 				{
 					title: 'Fork Me!',
-					externalLink: 'https://github.com/BaronChen/numberWordConvert'
+					externalLink: 'https://github.com/BaronChen/numberWordConvert',
+					icon: 'github-circle',
+					routeName: 'Fork'
 				}
 			];
 
@@ -37,6 +46,10 @@
 				$mdSidenav('left').toggle();
 			}
 
+			$scope.isActive = function(routeName)
+			{
+				return $route.current.name === routeName;
+			}
 		}
 	};
 }
