@@ -1,12 +1,22 @@
-﻿app.directive('sidenavDirective', ['$location', '$mdSidenav', '$route', function ($location, $mdSidenav, $route) {
+﻿app.directive('sidenavDirective', ['$location', '$mdSidenav', '$state', function ($location, $mdSidenav, $state) {
 
 	return {
 		restrict: 'E',
 		scope: {
 		},
+		controller: 'sidenavDirectiveController',
+		controllerAs: 'ctrl',
+		bindToController: true,
 		templateUrl: 'app/directives/sidenav/sidenavDirective.html',
 		link: function ($scope, element, attrs) {
-			$scope.$route = $route; 
+			$scope.$state = $state;
+
+			$scope.currentStateName = $state.current.name;
+
+			$scope.toggleMenu = function () {
+				$mdSidenav('left').toggle();
+			}
+
 			$scope.menuItems = [
 				{
 					title: 'Converter',
@@ -35,21 +45,7 @@
 				}
 			];
 
-			$scope.go = function (menuItem) {
-				if (menuItem.externalLink) {
-					window.location.href = menuItem.externalLink;
-				}
-				$location.path(menuItem.route);
-			};
-
-			$scope.toggleMenu = function() {
-				$mdSidenav('left').toggle();
-			}
-
-			$scope.isActive = function(routeName)
-			{
-				return $route.current.name === routeName;
-			}
+		
 		}
 	};
 }

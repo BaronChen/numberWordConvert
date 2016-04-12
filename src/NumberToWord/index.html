@@ -8,13 +8,14 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.7/angular-material.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-messages.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+
 
 
 
@@ -29,6 +30,7 @@
 	<script src="app/app.js"></script>
 	<script src="app/services/converterService.js"></script>
 	<script src="app/directives/header/header.directive.js"></script>
+	<script src="app/directives/sidenav/sidenaveDirective.controller.js"></script>
 	<script src="app/directives/sidenav/sidenav.directive.js"></script>
 	<script src="app/controllers/converterController.js"></script>
 	<script src="app/controllers/apiDocController.js"></script>
@@ -51,7 +53,7 @@
 
 		<!-- Container #4 -->
 		<md-content flex id="content" >
-			<ng-view></ng-view>
+			<div ui-view></div>
 		</md-content>
 
 	</div>

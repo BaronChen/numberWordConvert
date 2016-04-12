@@ -1,31 +1,29 @@
 ﻿'use strict';
 
-var app = angular.module('myApp', ['ngRoute', 'ngMaterial', 'ngAria', 'ngMessages', 'ngMdIcons']);
+var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngAria', 'ngMessages', 'ngMdIcons']);
 
-app.config(['$routeProvider', '$locationProvider', '$mdIconProvider', '$mdThemingProvider',
-  function ($routeProvider, $locationProvider, $mdIconProvider, $mdThemingProvider) {
-  	$routeProvider.
-      when('/converter', {
-      	templateUrl: 'app/views/converter.html',
-      	controller: 'converterController',
-      	controllerAs: 'vm',
-		name: 'converter'
-      }).
-	 when('/api-doc', {
-		templateUrl: 'app/views/api-doc.html',
-		controller: 'apiDocController',
-		controllerAs: 'vm',
-		name: 'apiDoc'
-	 }).
-	 when('/about', {
-	 	templateUrl: 'app/views/about.html',
-	 	controller: 'aboutController',
-	 	controllerAs: 'vm',
-		name: 'about'
-	 }).
-     otherwise({
-     	redirectTo: '/converter'
-      });
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider', '$mdThemingProvider',
+  function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider, $mdThemingProvider) {
+  	$urlRouterProvider.otherwise("/converter");
+  	$stateProvider
+		.state('converter', {
+			url: "/converter",
+			templateUrl: 'app/views/converter.html',
+			controller: 'converterController',
+			controllerAs: 'vm'
+		})
+		.state('apiDoc', {
+			url: "/api-doc",
+			templateUrl: 'app/views/api-doc.html',
+			controller: 'apiDocController',
+			controllerAs: 'vm'
+		})
+		.state('about', {
+			url: "/about",
+			templateUrl: 'app/views/about.html',
+			controller: 'aboutController',
+			controllerAs: 'vm'
+		});
 
   	$locationProvider.html5Mode(true);
 
