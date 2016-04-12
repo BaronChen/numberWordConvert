@@ -1,7 +1,7 @@
 ﻿
 <md-list ng-click="toggleMenu()" >
-	<md-list-item ng-repeat="menuItem in menuItems">
-		<md-button ng-click="ctrl.go(menuItem)" ng-class="{activeMenu: ctrl.isActive(menuItem.routeName)}">
+	<md-list-item ng-repeat="menuItem in menuItems" ng-class="{activeMenu: ctrl.isActive(menuItem.routeName)}">
+		<md-button ng-click="ctrl.go(menuItem)" >
 			<ng-md-icon icon="{{menuItem.icon}}" style="fill: #00BCD4" size="34"></ng-md-icon>
 			{{menuItem.title}}
 		</md-button>

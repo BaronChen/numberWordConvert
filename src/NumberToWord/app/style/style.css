@@ -43,6 +43,10 @@ md-toolbar.md-warn .md-toolbar-tools button span {
 	background-color: rgba(158,158,158,0.2);
 }
 
+.md-button:not([disabled]).md-focused {
+	background-color: transparent !important;
+}
+
 /*#content {
 	padding-left: 40px;
 	padding-right: 40px;
