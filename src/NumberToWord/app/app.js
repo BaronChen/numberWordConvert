@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngAria', 'ngMessages', 'ngMdIcons']);
+var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngAria', 'ngMessages', 'ngMdIcons', 'angular-loading-bar', 'ngAnimate']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider', '$mdThemingProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider, $mdThemingProvider) {
